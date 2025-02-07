@@ -1,0 +1,94 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    text-align: center;
+    color: #333;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: white;
+    padding: 30px;
+    font-size: 22px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header p {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* Main Content */
+main {
+    margin: 50px auto;
+    max-width: 700px;
+    padding: 20px;
+}
+
+/* Intro Section */
+.intro {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.custom-button {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #28a745, #1e7e34);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.custom-button:hover {
+    background: linear-gradient(135deg, #1e7e34, #155724);
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    margin-top: 50px;
+    padding: 15px;
+    background: #222;
+    color: white;
+    font-size: 14px;
+    position: relative;
+}
+
+.rotating-earth {
+    display: inline-block;
+    animation: rotateEarth 5s linear infinite;
+}
+
+.rotating-earth {
+    display: inline-block;
+    animation: verticalRotate 5s linear infinite;
+    transform-origin: center;
+}
+
+@keyframes verticalRotate {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}

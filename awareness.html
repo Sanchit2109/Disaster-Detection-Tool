@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Detection & Awareness</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Disaster Awareness</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="text-center">Disaster Detection & Awareness</h1>
+        <p class="text-center">Stay informed and prepared for natural disasters.</p>
+        
+        <div class="row text-center mt-4">
+            <div class="col-md-3">
+                <button class="btn btn-outline-primary w-100" onclick="showContent('earthquake')">🌍 Earthquake</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-outline-primary w-100" onclick="showContent('flood')">🌊 Flood</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-outline-primary w-100" onclick="showContent('fire')">🔥 Forest Fire</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-outline-primary w-100" onclick="showContent('landslide')">🏔️ Landslide</button>
+            </div>
+        </div>
+
+        <div class="mt-4 p-4 bg-light rounded" id="disaster-info">
+            <h3 id="disaster-title">Select a disaster to see details</h3>
+            <p id="disaster-content">Click on any button above to learn about causes and safety measures.</p>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>© 2025 Disaster Awareness. Stay safe, stay informed.</p>
+    </footer>
+
+    <script>
+        function showContent(type) {
+            const data = {
+                earthquake: { title: "Earthquake", content: "Causes: Tectonic plate movement, volcanic activity. Safety Measures: Drop, Cover, Hold, move to open areas." },
+                flood: { title: "Flood", content: "Causes: Heavy rainfall, dam failures, storm surges. Safety Measures: Move to higher ground, avoid floodwaters." },
+                fire: { title: "Forest Fire", content: "Causes: Dry weather, lightning, human negligence. Safety Measures: Evacuate, stay low, use a wet cloth over mouth." },
+                landslide: { title: "Landslide", content: "Causes: Heavy rain, earthquakes, deforestation. Safety Measures: Avoid slopes, move away from landslide paths." }
+            };
+            document.getElementById("disaster-title").innerText = data[type].title;
+            document.getElementById("disaster-content").innerText = data[type].content;
+        }
+    </script>
+</body>
+</html>
