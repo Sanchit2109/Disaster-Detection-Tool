@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Detection</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <header>
+        <h1>🌍 Disaster Detection System</h1>
+    </header>
+
+    <main>
+        <p>Enter a location to get real-time weather, earthquake data, and disaster risk prediction.</p>
+
+        <form id="location-form">
+            <label for="location">Enter Location:</label>
+            <input type="text" id="location" placeholder="e.g., California" required>
+            <button type="submit">Get Information</button>
+        </form>
+
+        <h2>🌤️ Weather Information:</h2>
+        <p id="weather-info">Waiting for input...</p>
+
+        <h2>🌍 Earthquake Information:</h2>
+        <p id="earthquake-info">Waiting for input...</p>
+
+        <h2>⚠️ Predicted Disaster Risk Level:</h2>
+        <p id="prediction-result">Waiting for input...</p>
+    </main>
+
+    <script>
+        document.getElementById("location-form").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const location = document.getElementById("location").value;
+
+            try {
+                // Fetch disaster data from Node.js backend
+                const response = await fetch(`http://127.0.0.1:3000/fetch-disaster-data?location=${location}`);
+                const data = await response.json();
+
+                // Extract and display weather information
+                const weather = data.weather;
+                document.getElementById("weather-info").textContent = 
+                    `🌡️ Temperature: ${weather.main.temp}°C, 💧 Humidity: ${weather.main.humidity}%, 💨 Wind Speed: ${weather.wind.speed} m/s`;
+
+                // Extract and display earthquake information
+                let earthquakeText = "No recent earthquakes reported.";
+                if (data.earthquake.features.length > 0) {
+                    const latestEarthquake = data.earthquake.features[0];
+                    earthquakeText = `🌍 Magnitude: ${latestEarthquake.properties.mag}, 📍 Location: ${latestEarthquake.properties.place}`;
+                }
+                document.getElementById("earthquake-info").textContent = earthquakeText;
+
+                // Prepare ML model input based on weather & earthquake data
+                const windSpeed = weather.wind.speed;
+                const magnitude = data.earthquake.features.length > 0 ? data.earthquake.features[0].properties.mag : 0;
+                const features = [windSpeed, magnitude];
+
+                // Send data to ML model for risk prediction
+                const mlResponse = await fetch("http://127.0.0.1:3000/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ features, location })
+                });
+
+                const prediction = await mlResponse.json();
+                document.getElementById("prediction-result").textContent = `⚠️ Risk Level: ${prediction.prediction}`;
+
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("weather-info").textContent = "⚠️ Error fetching weather data.";
+                document.getElementById("earthquake-info").textContent = "⚠️ Error fetching earthquake data.";
+                document.getElementById("prediction-result").textContent = "⚠️ Error predicting disaster risk.";
+            }
+        });
+    </script>
+</body>
+</html>
